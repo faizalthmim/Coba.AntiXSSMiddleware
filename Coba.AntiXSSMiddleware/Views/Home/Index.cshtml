@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model MyTestViewModel
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form", name = "form" }))
+    {
+        <p>Test textbox model 1</p>
+        @Html.TextBoxFor(m => m.Textbox1)
+        <p>Test textbox model 1</p>
+        @Html.TextBoxFor(m => m.Textbox2)
+        <div>
+            <button type="submit" id="btnSubmit">Submit</button>
+        </div>
+    }
+
+</div>
+
+
+@section Scripts{
+    <script>
+    $(function () {
+
+        function submitClick(e) {
+            e.preventDefault();
+            var $form = $("#form");
+
+            var data = $form.serialize();
+
+            $.ajax({
+                url: "@Url.Action("Index")",
+                type: "POST",
+                data: data,
+                success: function (result) {
+                    if (result.isSucceed) {
+                        alert('ok')
+                    }
+                    else {
+                        alert(result.message)
+                    }
+                }
+            });
+        }
+        $("#btnSubmit").click(submitClick);
+
+    })
+
+    </script>
+
+}
